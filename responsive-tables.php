@@ -36,15 +36,17 @@ class ResponsiveTables {
 	function csv_to_table($content,$args){
 		$row_array = $this->csv_to_array($content, $args);
 
-		echo "<table class='responsive'>";
+		$out = "<table class='responsive'>";
 		foreach($row_array as &$row) {
-			echo "<tr>";
+			$out .= "<tr>";
 			foreach($row as &$cell) {
-			  echo "<td>".$cell."</td>";
+				$out .= "<td>".$cell."</td>";
 			}
-			echo "</tr>";
+			$out .= "</tr>";
 		}
-		echo "</table>";
+		$out .= "</table>";
+
+		return $out;
 	}
 
 	function csv_to_array($content,$args){
