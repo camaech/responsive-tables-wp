@@ -1,4 +1,3 @@
-
 <?php
 /*
 * Plugin Name: Responsive Tables
@@ -15,7 +14,7 @@ class ResponsiveTables {
 	function __construct(){
 		add_shortcode( 'table', array(&$this,'responsive_tables_shortcode') );
 
-		add_action('wp_footer', array(&$this, 'print_script'));
+		add_action('wp_footer', array(&$this, 'responsive_tables_print_script'));
 	}
 
 	function responsive_tables_shortcode( $atts, $content = null ) {
@@ -66,13 +65,12 @@ class ResponsiveTables {
 		return $rows;
 	}
 
-	function print_script() {
-		error_log('print_script');
+	function responsive_tables_print_script() {
 		if ( ! self::$add_script )
 			return;
 
-		wp_print_scripts('responsive-tables');
-		wp_print_styles('responsive-tables');
+		wp_print_scripts('responsive-tables-js');
+		wp_print_styles('responsive-tables-css');
 	}
 } //end class
 
@@ -83,13 +81,13 @@ function Responsive_Tables_Plugin() {
 	}
 }
 
-function register_script() {
-	wp_register_script('responsive-tables', plugins_url('responsive-tables.js', __FILE__), array('jquery'), '1.0', true);
+function responsive_tables_register_script() {
+	wp_register_script('responsive-tables-js', plugins_url('responsive-tables.js', __FILE__), array('jquery'), '1.0', true);
 }
-add_action('init', 'register_script');
+add_action('init', 'responsive_tables_register_script');
 
-function register_style() {
-	wp_register_style( 'responsive-tables', plugins_url( 'responsive-tables.css', __FILE__) );
+function responsive_tables_register_style() {
+	wp_register_style( 'responsive-tables-css', plugins_url( 'responsive-tables.css', __FILE__) );
 }
-add_action('init', 'register_style');
+add_action('init', 'responsive_tables_register_style');
 ?>
